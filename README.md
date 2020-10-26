@@ -1,3 +1,3 @@
 # Seminario GoLang
 
-[Inicio](./docs/tp0.md)
+[Actividad inicial](./docs/tp0.md)
