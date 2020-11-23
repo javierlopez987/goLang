@@ -6,4 +6,11 @@ func main()  {
 	ta.Add(Flight{1, "Iberia", "IB5678", "2021-12-29T15:00Z", "2021-12-29T17:00Z", "MAD", "LIS"})
 
 	ta.Print()
+
+	f1 := ta.FindByID(1)
+	if f1 != nil {
+		f1.Print()
+	}
+
+	
 }
