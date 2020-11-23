@@ -13,4 +13,7 @@ func main()  {
 
 	ta.Delete(1)
 	ta.Print()
+
+	ta.Update(Flight{0, "Iberia", "IB1234", "2020-12-28T22:00Z", "2021-12-29T10:00Z", "EZE", "MAD"})
+	ta.Print()
 }

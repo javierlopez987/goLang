@@ -28,6 +28,11 @@ func (ta TravelAgenda) Delete(ID int)  {
 	delete(ta.flights, ID)
 }
 
+// Update ...
+func (ta TravelAgenda) Update(f Flight) {
+	ta.flights[f.ID] = &f
+}
+
 // Print ...
 func (ta TravelAgenda) Print() {
 	for _, v := range ta.flights {
