@@ -23,6 +23,11 @@ func (ta TravelAgenda) FindByID(ID int) (f *Flight)  {
 	return ta.flights[ID]
 }
 
+// Delete ...
+func (ta TravelAgenda) Delete(ID int)  {
+	delete(ta.flights, ID)
+}
+
 // Print ...
 func (ta TravelAgenda) Print() {
 	for _, v := range ta.flights {
