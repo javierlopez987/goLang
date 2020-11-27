@@ -40,14 +40,14 @@ func createSchema(db *sqlx.DB)  {
 	}
 
 	db.MustExec("INSERT INTO user (name) VALUES (?)", "Jane Doe")
-	rows, err := db.Query("SELECT id, name FROM user")
+	rows, err := db.Queryx("SELECT id, name FROM user")
 	if err != nil {
 		panic(err.Error())
 	}
 
 	for rows.Next() {
 		var u User
-		rows.Scan(&u.ID, &u.Name)
+		rows.StructScan(&u)
 		fmt.Println(u)
 	}
 }
