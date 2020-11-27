@@ -6,13 +6,22 @@ import (
 	"flag"
 	"github.com/javierlopez987/goLang/internal/config"
 	"github.com/javierlopez987/goLang/internal/service/chat"
+	"github.com/javierlopez987/goLang/internal/database"
 )
 
 func main()  {
 
 	cfg := readConfig()
 
-	service, _ := chat.New(cfg)
+	
+	db, err := database.NewDatabase(cfg)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+	
+	service, _ := chat.New(db, cfg)
+
 	for _, m := range service.FindAll() {
 		fmt.Println(m)
 	}
