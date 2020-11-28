@@ -36,6 +36,8 @@ func (s service) FindByID(ID int) *Message {
 }
 func (s service) FindAll() []*Message {
 	var list []*Message
-	s.db.Select(&list, "SELECT * FROM messages")
+	if err := s.db.Select(&list, "SELECT * FROM messages"); err != nil {
+		panic(err)
+	}
 	return list
 }

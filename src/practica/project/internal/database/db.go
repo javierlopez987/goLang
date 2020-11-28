@@ -8,7 +8,7 @@ import (
 )
 
 // NewDatabase ...
-func NewDatabase(conf *config.Config) *sqlx.DB, error {
+func NewDatabase(conf *config.Config) (*sqlx.DB, error) {
 	switch conf.DB.Type {
 	case "sqlite3":
 		db, err := sqlx.Open(conf.DB.Driver, conf.DB.Conn)
