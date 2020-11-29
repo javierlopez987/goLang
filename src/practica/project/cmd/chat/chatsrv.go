@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 	"flag"
-	"time"
 
 	"github.com/javierlopez987/goLang/internal/config"
 	"github.com/javierlopez987/goLang/internal/database"
 	"github.com/javierlopez987/goLang/internal/service/chat"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/gin-gonic/gin"
+
 )
 
 func main()  {
@@ -20,23 +20,20 @@ func main()  {
 
 	// Instanciacion de db
 	db, err := database.NewDatabase(cfg)
+	defer db.Close()
+
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
-	
-	if err := createSchema(db); err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
 
-	// Instanciacion un servicio y le inyecta la configuracion y la base de datos
+	// Instanciacion de un servicio y le inyecta la configuracion y la base de datos
 	service, _ := chat.New(db, cfg)
+	httpService := chat.NewHTTPTransport(service)
 
-	for _, m := range service.FindAll() {
-		fmt.Println(m)
-	}
-
+	r:= gin.Default()
+	httpService.Register(r)
+	r.Run()
 }
 
 func readConfig() *config.Config {
@@ -50,23 +47,4 @@ func readConfig() *config.Config {
 	}
 
 	return cfg
-}
-
-// Solo en entornos de desarrollo
-func createSchema(db *sqlx.DB) error {
-	schema := `CREATE TABLE IF NOT EXISTS messages (
-		id integer primary key autoincrement,
-		text varchar);`
-
-	// ejecuta una query en el servidor
-	_, err := db.Exec(schema)
-	if err != nil {
-		return err
-	}
-
-	// MustExec tira un panic on error
-	insertMessage := "INSERT INTO messages (text) VALUES (?)"
-	s := fmt.Sprintf("Message number %v", time.Now().Nanosecond())
-	db.MustExec(insertMessage, s)
-	return nil
 }
