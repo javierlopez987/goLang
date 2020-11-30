@@ -1,7 +1,7 @@
 # Seminario GoLang
 
 ## Entregable Final
-- [Repositorio trabajo final](github.com/javierlopez/seminarioGoLang)
+- [Repositorio trabajo final](https://www.github.com/javierlopez987/seminarioGoLang)
 
 ## Apuntes de clase
 - [Apuntes iniciales](./docs/doc0.md)
